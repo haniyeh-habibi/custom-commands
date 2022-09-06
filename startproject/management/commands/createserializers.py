@@ -24,6 +24,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         app_name = options.get('app_name')
         model = options.get('model')
+        if not os.path.isdir(app_name):
+            print(f'App {app_name} does not exist.')
+            return
         os.chdir(f'{app_name}')
         print('Installing djangorestframework package from pip')
         os.system('pip install djangorestframework')
