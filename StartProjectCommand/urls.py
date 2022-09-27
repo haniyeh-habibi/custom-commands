@@ -16,6 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from startproject import views
+
+app_name = 'startproject'
+
 urlpatterns = [
+    path('', views.homepage, name='home'),
     path('admin/', admin.site.urls),
+    path('contact', views.contact, name='contact'),
 ]
