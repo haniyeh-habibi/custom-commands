@@ -9,6 +9,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('app_name')
         parser.add_argument('model')
+        parser.add_argument('project_name')
 
         parser.add_argument(
             '--app',
@@ -20,10 +21,16 @@ class Command(BaseCommand):
             dest='model',
             action='store_true'
         )
+        parser.add_argument(
+            '--project_name',
+            dest='project_name',
+            action='store_true'
+        )
 
     def handle(self, *args, **options):
         app_name = options.get('app_name')
         model = options.get('model')
+        os.chdir(options.get('project_name'))
         if not os.path.isdir(app_name):
             print(f'App {app_name} does not exist.')
             return
@@ -31,7 +38,8 @@ class Command(BaseCommand):
         print('Installing djangorestframework package from pip')
         os.system('pip install djangorestframework')
         print('Installed djangorestframework.')
-        with open('serializers.py'):
+
+        with open('serializers.py', 'w'):
             serializer_file_content = (
                 'from rest_framework import serializers\n'
                 f'from models import {model}\n\n\n'
